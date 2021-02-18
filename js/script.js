@@ -111,13 +111,14 @@ window.addEventListener('DOMContentLoaded', () => {
         modalWindow.classList.add('show');
         modalWindow.classList.remove('hide');
         document.body.style.overflow = 'hidden';
+        clearTimeout(timeout);
     }
 
     modalTrigger.forEach(item => {
-        item.addEventListener('click', openModalWindow());
+        item.addEventListener('click', openModalWindow);
     });
 
-    dataClose.addEventListener('click', closeModalWindow());
+    dataClose.addEventListener('click', closeModalWindow);
 
     modalWindow.addEventListener('click', (event) => {
         if (event.target === modalWindow) {
@@ -133,5 +134,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const timeout = setTimeout(openModalWindow(), 5000);
+    const timeout = setTimeout(openModalWindow, 5000);
+
+    function showModalByScroll() {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModalWindow(); 
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+    window.addEventListener('scroll', showModalByScroll);
 });
