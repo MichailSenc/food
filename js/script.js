@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // TIMER
 
-    const deadline = '2021-02-16';
+    const deadline = '2021-02-19';
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - new Date(),
@@ -94,4 +94,44 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setClock('.timer', deadline);
+    
+    //MODAL 
+    
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+    modalWindow = document.querySelector('.modal'),
+    dataClose = document.querySelector('[data-close]');
+    
+    function closeModalWindow() {
+        modalWindow.classList.remove('show');
+        modalWindow.classList.add('hide');
+        document.body.style.overflow = '';
+    }
+
+    function openModalWindow() {
+        modalWindow.classList.add('show');
+        modalWindow.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+    }
+
+    modalTrigger.forEach(item => {
+        item.addEventListener('click', openModalWindow());
+    });
+
+    dataClose.addEventListener('click', closeModalWindow());
+
+    modalWindow.addEventListener('click', (event) => {
+        if (event.target === modalWindow) {
+            closeModalWindow();
+        }
+    });
+
+
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Escape' && modalWindow.classList.contains('show')) {
+            // console.log('ESC');
+            closeModalWindow();
+        }
+    });
+
+    const timeout = setTimeout(openModalWindow(), 5000);
 });
