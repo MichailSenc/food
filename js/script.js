@@ -233,29 +233,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
             form.insertAdjacentElement('afterend', statusMessage);
 
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-            request.setRequestHeader('Content-type', 'application/json');
+            // const request = new XMLHttpRequest();
+            // request.open('POST', 'server.php');
+            // request.setRequestHeader('Content-type', 'application/json');
 
-            const formData = new FormData(form);
+            const formData = new FormData(form); //Записывает все данные из формы 'form' в пару ключ-знчение
 
             const obj = {};
             formData.forEach((value, key) => {
                 obj[key] = value;
             });
 
-            request.send(JSON.stringify(obj));
-
-            request.addEventListener('load', () => {
-                if (request.status === 200) {
-                    console.log(request.response);
+            fetch('serve1.php', {
+                    method: "POST",
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                })
+                .then(data => data.text())
+                .then(data => {
+                    console.log(data);
                     showThanksModal(message.success);
-                    form.reset();
                     statusMessage.remove();
-                } else {
+                }).catch(() => {
                     showThanksModal(message.success);
-                }
-            });
+                }).finally(() => {
+                    form.reset();
+                });
         });
     }
 
@@ -282,4 +287,19 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModalWindow();
         }, 4000);
     }
+
+    // Fetch API
+
+    // fetch('https://jsonplaceholder.typicode.com/posts', {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //             name: 'Alex'
+    //         }),
+    //         headers: {
+    //             'Content-type': 'application/json'
+    //         }
+    //     })
+    //     .then(response => response.json())
+    //     .then(json => console.log(json));
+
 });
