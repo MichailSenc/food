@@ -181,23 +181,30 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const getResource = async (url) => {
-        const result = await fetch(url);
+    // const getResource = async (url) => {
+    //     const result = await axios.get('http://localhost:3000/menu');
 
-        if (!result.ok) {
-            throw new Error(`Could not fetch ${url} status: ${result.status}`);
-        }
+    //     // if (!result.ok) {
+    //     //     throw new Error(`Could not fetch ${url} status: ${result.status}`);
+    //     // }
 
-        return await result.json();
-    };
+    //     return await result.data;
+    // };
 
-    getResource('http://localhost:3000/menu')
+    // getResource('http://localhost:3000/menu')
+    //     .then(data => {
+    //         data.forEach(({img, altimg, title, descr, price}) => {
+    //             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    //         });
+    //     });
+
+    axios.get('http://localhost:3000/menu')
         .then(data => {
-            data.forEach(({img, altimg, title, descr, price}) => {
+            data.data.forEach(({img, altimg, title, descr, price}) => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
         });
-        
+
     //Forms 
 
     const forms = document.querySelectorAll('form');
@@ -276,7 +283,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 
-    fetch('http://localhost:3000/menu')
-        .then(data => data.json())
-        .then(data => console.log(data));
+    // fetch('http://localhost:3000/menu')
+    //     .then(data => data.json())
+    //     .then(data => console.log(data));
 });
