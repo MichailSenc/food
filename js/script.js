@@ -200,7 +200,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
     axios.get('http://localhost:3000/menu')
         .then(data => {
-            data.data.forEach(({img, altimg, title, descr, price}) => {
+            data.data.forEach(({
+                img,
+                altimg,
+                title,
+                descr,
+                price
+            }) => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
         });
@@ -283,7 +289,43 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 
-    // fetch('http://localhost:3000/menu')
-    //     .then(data => data.json())
-    //     .then(data => console.log(data));
+
+    //Slider
+
+    const slider = document.querySelector('.offer__slider'),
+        current = slider.querySelector('#current'),
+        total = slider.querySelector('#total'),
+        sliderItems = slider.querySelectorAll('.offer__slide');
+
+    let currentSlideID = 0;
+    
+    total.textContent = sliderItems.length > 10 ? `${sliderItems.length}` : `0${sliderItems.length}`;
+
+    function hideSliderItems() {
+        sliderItems.forEach(item => {
+            item.classList.add('hide');
+        });
+    }
+
+    function showSliderItems(i = 0) {
+        sliderItems[i].classList.remove('hide');
+        current.textContent = i + 1 > 10 ? `${i + 1}` : `0${i + 1}`;
+    }
+
+    hideSliderItems();
+    showSliderItems();
+
+    slider.querySelector('.offer__slider-prev').addEventListener('click', () => {
+        currentSlideID--;
+        if (currentSlideID < 0) currentSlideID = sliderItems.length - 1;
+        hideSliderItems();
+        showSliderItems(currentSlideID);
+    });
+    
+    slider.querySelector('.offer__slider-next').addEventListener('click', () => {
+        currentSlideID++;
+        if (currentSlideID > sliderItems.length - 1) currentSlideID = 0;
+        hideSliderItems();
+        showSliderItems(currentSlideID);
+    });
 });
