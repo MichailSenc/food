@@ -1,13 +1,22 @@
-function slider() {
+function slider({
+    sliderSelector,
+    currentSelector,
+    totalSelector,
+    stilesWrapperSelector,
+    stilesFieldSelector,
+    sliderItemsSelector,
+    prevSelector,
+    nextSelector
+}) {
     //Slider
 
-    const slider = document.querySelector('.offer__slider'),
-        current = slider.querySelector('#current'),
-        total = slider.querySelector('#total'),
-        stilesWrapper = slider.querySelector('.offer__slider-wrapper'),
-        stilesField = slider.querySelector('.offer__slider-inner'),
+    const slider = document.querySelector(sliderSelector),
+        current = slider.querySelector(currentSelector),
+        total = slider.querySelector(totalSelector),
+        stilesWrapper = slider.querySelector(stilesWrapperSelector),
+        stilesField = slider.querySelector(stilesFieldSelector),
         width = window.getComputedStyle(stilesWrapper).width,
-        sliderItems = slider.querySelectorAll('.offer__slide');
+        sliderItems = slider.querySelectorAll(sliderItemsSelector);
 
     let currentSlideID = 1;
     let offset = 0;
@@ -55,7 +64,7 @@ function slider() {
         dots[currentSlideID - 1].style.opacity = '1';
     }
 
-    slider.querySelector('.offer__slider-next').addEventListener('click', () => {
+    slider.querySelector(nextSelector).addEventListener('click', () => {
         if (offset == parseInt(width) * (sliderItems.length - 1)) {
             offset = 0;
         } else {
@@ -73,7 +82,7 @@ function slider() {
         changeDotOpacity();
     });
 
-    slider.querySelector('.offer__slider-prev').addEventListener('click', () => {
+    slider.querySelector(prevSelector).addEventListener('click', () => {
         if (offset == 0) {
             offset = parseInt(width) * (sliderItems.length - 1);
         } else {
@@ -103,4 +112,4 @@ function slider() {
     });
 }
 
-module.exports = slider;
+export default slider;
