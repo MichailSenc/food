@@ -81,8 +81,6 @@ function calc() {
                 input.style.border = 'none';
             }
 
-            console.log(input.value);
-
             switch (input.getAttribute('id')) {
                 case 'height':
                     height = +input.value;
